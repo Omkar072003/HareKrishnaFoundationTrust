@@ -1,0 +1,62 @@
+{# templates/send_messages.html #}
+{% extends "base.html" %}
+{% block title %}Send Messages{% endblock %}
+{% block content %}
+<h2>Send Messages</h2>
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-title">Invoice Details</h5>
+        <p class="card-text">
+            <strong>Customer:</strong> {{ invoice[1] }}<br>
+            <strong>Email:</strong> {{ invoice[2] }}<br>
+            <strong>Date:</strong> {{ invoice[3] }}<br>
+            <strong>Time:</strong> {{ invoice[4] }}<br>
+            <strong>Procedure:</strong> {{ invoice[5] }} (x{{ invoice[6] }})<br>
+            <strong>Total:</strong> ₹{{ "%.2f"|format(invoice[6] * invoice[7]) }}
+        </p>
+    </div>
+</div>
+
+<form method="POST">
+    <div class="mb-3">
+        <label for="imaging_center" class="form-label">Select Imaging Center</label>
+        <select class="form-select" id="imaging_center" name="imaging_center" required>
+            <option value="">Choose...</option>
+            {% for center in centers %}
+            <option value="{{ center[0] }}">{{ center[1] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="customer_message" class="form-label">Message to Customer</label>
+            <textarea class="form-control" id="customer_message" name="customer_message" rows="5" required></textarea>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="center_message" class="form-label">Message to Imaging Center</label>
+            <textarea class="form-control" id="center_message" name="center_message" rows="5" required></textarea>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="send_invoice" name="send_invoice" checked>
+            <label class="form-check-label" for="send_invoice">
+                Attach Invoice PDF
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="send_appointment" name="send_appointment" checked>
+            <label class="form-check-label" for="send_appointment">
+                Attach Appointment Details PDF
+            </label>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Send Messages</button>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+{% endblock %}

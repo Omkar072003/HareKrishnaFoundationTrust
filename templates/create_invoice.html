@@ -1,0 +1,51 @@
+{# templates/create_invoice.html #}
+{% extends "base.html" %}
+{% block title %}Create Invoice{% endblock %}
+{% block content %}
+<h2>Create New Invoice</h2>
+<form method="POST" class="needs-validation" novalidate>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="customer_name" class="form-label">Customer Name</label>
+            <input type="text" class="form-control" id="customer_name" name="customer_name" required>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input type="date" class="form-control" id="date" name="date" required>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="time_slot" class="form-label">Time Slot</label>
+            <select class="form-select" id="time_slot" name="time_slot" required>
+                <option value="">Select time slot...</option>
+                {% for slot in time_slots %}
+                <option value="{{ slot }}">{{ slot }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="product" class="form-label">Procedure</label>
+            <input type="text" class="form-control" id="product" name="product" required>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="quantity" class="form-label">Quantity</label>
+            <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1" required>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="price" class="form-label">Price (₹)</label>
+            <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+        </div>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Create Invoice</button>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+{% endblock %}

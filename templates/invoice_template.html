@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        .total {
+            font-weight: bold;
+        }
+        .watermark {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 80px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.1); /* Adjust transparency */
+    z-index: -1; /* Keeps it behind content */
+    white-space: nowrap;
+}
+
+    </style>
+</head>
+<body>
+    <img src="{{ url_for('static', filename='hkft.png') }}" alt="Company Logo">
+    <div class="watermark">Hare Krishna Foundation Trust</div> 
+    <h1>Invoice</h1>
+    <p>Invoice ID: {{ invoice.id }}</p>
+    <p>Customer: {{ invoice.customer_name }}</p>
+    <p>Email: {{ invoice.customer_email }}</p>
+    <p>Date: {{ invoice.date }}</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price (₹)</th>
+                <th>Total (₹)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in invoice.items %}
+                <tr>
+                    <td>{{ item.product_name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>₹ {{ item.price }}</td>
+                    <td>₹ {{ item.quantity * item.price }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p class="total">Total Amount: ₹ {{ invoice.total_amount }}</p>
+</body>
+</html>
